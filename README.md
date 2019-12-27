@@ -5,7 +5,7 @@ There are five assignments in total. Here is a brief description of each one of 
 
 
 ## Assignment 1. Word Embeddings
-This assignments has two parts which are about 
+This assignments has two parts which are about representing words with dense vectors. Having these vectors can be really useful in down-stream tasks in NLP. The first method of deriving weord vector stems from the co-occurence matrices and SVD decomposition. The second method is based on maximum-likelihood training in ML.
 
 ### 1. Count-Based Word Vectors
 In this part, you have to use the co-occurence matrices to develop dense vectors for words. A co-occurence matrix counts how often different terms co-occur in different documents. To derive a co-occurence matrix, we use a window with a fixed size _w_, and then slide this window over all of the documents. Then, we count how many times two different words v_i and v_j occurs with each other in a window, and put this number in the (i, j) entry of the matrix.<br/>
@@ -34,5 +34,40 @@ In this assignment you will get familiar with the word2vec algorithm. The key in
 
 <p align="center">
 <img src="figures/word2vec.jpg" alt="drawing" width="450"/>
+</p>
+
+
+
+## Assignment 3. Neural Dependency Parsing
+If you have take a compiler course before, you have definitely heard the term "parsing". This assignment is about "dependency parsing" where you have to train a model that can sepcify the dependencir . If you remember "Shift-Reduce Parser" from your Compiler class, then you will find the ideas here quite familiar. The only difference is that we use a neural network to find the dependencies. 
+
+In the theretical part of assignment (handout is available [here](https://web.stanford.edu/class/archive/cs/cs224n/cs224n.1194/assignments/a3.pdf)), the Adam optimizer is first introduced and you have to answer some questions about this optimizer. Then, there is a question about Dropout as a regularization technique. Both of Adam optimizer and Dropout will be used in the neural dependency parser you are going to implement with PyTorch.<br/>
+The parser will do one of the following three moves: 1) Shift 2) Left-arc 3) Right-arc. You can read more about the details of these three moves in the handout of the assignment. What you network should do is to predict one of these moves at every step. For predicting each move, your model needs features which are going to be extracted from the stack and buffer of each stage (there is a stack and a buffer throught parsing which let you know what you have already parsed and what is still remaining for parsing). The good news is that the code for extracting features is given to you so as to help you just focus on the neural network part! There are lots of hints throughout the assignment --as this is the first assignment in the course where students work with PyTorch-- that walk you through implementing each part. 
+
+<p align="center">
+<img src="figures/dependency-parsing.jpg" alt="drawing" width="450"/>
+</p>
+
+
+
+
+
+## Assignment 4. Seq2Seq Machine Translation
+In my opinion, this assignment is the most importatnt assignment of the course. Generally, you have to implement a Seq2Seq model that translates German sentences into English. The model that you will implement is based on [Luong et al. 2015](https://arxiv.org/pdf/1508.04025.pdf) . You will some important practical notes, such as working with recurrent neural networks in PyTorch, learning the differences between training and test time in RNNs, and implementing attention mechanism, and etc. The pipeline and the implementations provided for you are standard and inspired by the [Open-NMT](https://github.com/OpenNMT/OpenNMT-py) package. I highly recommend you to not just implement what is left for you and go further and evaluate carefully what TA's have provided for you, from getting inputs from CLI to evaluation metrics of NMT models and algorithms used for the decoding stage of RNNs such as Beam Search. There are lots of PyTorch techniques and functions that you can grasp and use in your future projects.
+
+<p align="center">
+<img src="figures/nmt.jpg" alt="drawing" width="350"/>
+</p>
+
+
+
+
+
+## Assignment 5. Hybrid Word-Character Seq2Seq Machine Translation
+The idea behind this assignment is same as the previous assingments, except that the model becomes more powerful as we will combine character-level with word-level language modeling. The idea is that whenever the NMT model from assignment 4 generates an <unk> token we do not put it in the output. Instead, we run a character-level language model and generate a word in the output character by character. In fact, this hybrid word-cahracter approach was proposed by [Luong and Manning 2016](https://arxiv.org/pdf/1604.00788.pdf) and tunred out to be effective in increasing the performance of the NMT model.
+
+
+<p align="center">
+<img src="figures/nmt-hybrid.jpg" alt="drawing" width="350"/>
 </p>
 
